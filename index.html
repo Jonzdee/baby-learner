@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Baby Learner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-yellow-50 to-pink-50 font-[Comic_Neue] text-center p-4 min-h-screen">
+
+  <h1 class="text-pink-500 text-2xl font-bold mb-1 drop-shadow-lg">Baby Learner 📚✨</h1>
+  <p class="text-gray-700 mb-4 text-sm">Tap a Letter or Number to see and hear it!</p>
+
+  <!-- Voice controls - simplified for children -->
+  <div class="flex justify-center gap-2 mb-4 text-xs">
+    <label class="flex items-center gap-1 bg-white px-2 py-1 rounded-xl border border-pink-200 shadow">
+      🔊
+      <input id="rate" type="range" min="0.5" max="1.25" step="0.05" value="0.8" class="w-12" />
+    </label>
+    <label class="flex items-center gap-1 bg-white px-2 py-1 rounded-xl border border-blue-200 shadow">
+      🎵
+      <input id="pitch" type="range" min="0.8" max="1.5" step="0.05" value="1.2" class="w-12" />
+    </label>
+  </div>
+
+  <!-- Visual Display Area - Compact for mobile -->
+  <div class="mx-auto max-w-sm bg-white rounded-2xl p-3 shadow-lg mb-4 border-2 border-purple-200">
+    <h3 id="wordTitle" class="text-lg font-bold text-gray-800 mb-2">🎯 Choose a letter!</h3>
+    <div class="bg-gradient-to-br from-yellow-100 to-pink-100 rounded-xl p-3 min-h-[120px] flex items-center justify-center">
+      <img id="wordImage" alt="" class="hidden mx-auto max-h-24 rounded-lg shadow" />
+      <div id="emojiShow" class="text-5xl">👶</div>
+    </div>
+  </div>
+
+  <!-- Alphabets Section -->
+  <div class="mb-4">
+    <h2 class="text-lg font-bold text-blue-600 mb-2">🔤 Letters</h2>
+    <div class="grid grid-cols-6 gap-1 alphabets"></div>
+  </div>
+
+  <!-- Numbers Section -->
+  <div class="mb-4">
+    <h2 class="text-lg font-bold text-orange-600 mb-2">🔢 Numbers</h2>
+    <div class="grid grid-cols-5 gap-1 numbers"></div>
+  </div>
+
+  <!-- Custom Text - Compact -->
+  <div class="bg-white rounded-xl p-3 shadow-lg border border-green-200 max-w-sm mx-auto">
+    <h3 class="text-sm font-bold text-green-600 mb-2">🗣️ Say Any Word!</h3>
+    <div class="flex gap-2">
+      <input type="text" id="customText" placeholder="Type a word…" 
+        class="flex-1 p-2 rounded-lg border border-gray-300 text-sm focus:border-green-400 focus:outline-none" />
+      <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg shadow font-bold text-sm" id="customSpeak">
+        🎤
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const msg = new SpeechSynthesisUtterance();
+    let allVoices = [];
+
+    function chooseFemaleVoice(voices){
+      const en = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+      const preferNames = [
+        'Google UK English Female','Microsoft Zira','Samantha','Victoria',
+        'Karen','Tessa','Serena','Amira','Zira'
+      ];
+      let v = en.find(v => preferNames.some(n => v.name.includes(n)));
+      if(!v) v = en.find(v => /female|woman/i.test(v.name));
+      return v || en[0] || voices[0];
+    }
+
+    function loadVoices(){
+      allVoices = speechSynthesis.getVoices();
+      const chosen = chooseFemaleVoice(allVoices);
+      if (chosen) msg.voice = chosen;
+    }
+    speechSynthesis.addEventListener('voiceschanged', loadVoices);
+    loadVoices();
+
+    const rateEl = document.getElementById('rate');
+    const pitchEl = document.getElementById('pitch');
+
+    function speak(text){
+      msg.text = text;
+      msg.rate = parseFloat(rateEl.value || 0.8);
+      msg.pitch = parseFloat(pitchEl.value || 1.2);
+      speechSynthesis.cancel();
+      speechSynthesis.speak(msg);
+    }
+
+    const titleEl = document.getElementById('wordTitle');
+    const imgEl = document.getElementById('wordImage');
+    const emojiEl = document.getElementById('emojiShow');
+    
+    function showVisual(label, word, imgPath, emoji){
+      titleEl.innerHTML = `<span class="text-pink-500">${label}</span> — ${word}`;
+      titleEl.className = "text-lg font-bold text-gray-800 mb-2";
+      
+      if (imgPath){
+        imgEl.style.display = 'none';
+        imgEl.src = imgPath;
+        imgEl.onload = () => { 
+          imgEl.classList.remove('hidden'); 
+          emojiEl.classList.add('hidden');
+          imgEl.className = "mx-auto max-h-24 rounded-lg shadow";
+        };
+        imgEl.onerror = () => { 
+          imgEl.classList.add('hidden'); 
+          emojiEl.textContent = emoji || '🖼️'; 
+          emojiEl.classList.remove('hidden');
+          emojiEl.className = "text-5xl";
+        };
+      } else {
+        imgEl.classList.add('hidden');
+        emojiEl.textContent = emoji || '🖼️';
+        emojiEl.classList.remove('hidden');
+        emojiEl.className = "text-5xl";
+      }
+    }
+
+    const ABC = {
+      A:{word:'Apple', emoji:'🍎'},
+      B:{word:'Ball', emoji:'⚽'},
+      C:{word:'Cat', emoji:'🐱'},
+      D:{word:'Dog', emoji:'🐶'},
+      E:{word:'Elephant', emoji:'🐘'},
+      F:{word:'Fish', emoji:'🐟'},
+      G:{word:'Goat', emoji:'🐐'},
+      H:{word:'Hat', emoji:'🎩'},
+      I:{word:'Ice cream', emoji:'🍦'},
+      J:{word:'Juice', emoji:'🧃'},
+      K:{word:'Kite', emoji:'🪁'},
+      L:{word:'Lion', emoji:'🦁'},
+      M:{word:'Monkey', emoji:'🐵'},
+      N:{word:'Nest', emoji:'🪺'},
+      O:{word:'Orange', emoji:'🍊'},
+      P:{word:'Pen', emoji:'🖊️'},
+      Q:{word:'Queen', emoji:'👑'},
+      R:{word:'Rabbit', emoji:'🐰'},
+      S:{word:'Sun', emoji:'☀️'},
+      T:{word:'Tiger', emoji:'🐯'},
+      U:{word:'Umbrella', emoji:'☂️'},
+      V:{word:'Van', emoji:'🚐'},
+      W:{word:'Watermelon', emoji:'🍉'},
+      X:{word:'Xylophone', emoji:'🎵'},
+      Y:{word:'Yam', emoji:'🍠'},
+      Z:{word:'Zebra', emoji:'🦓'}
+    };
+
+    const NUMS = {
+      1:{word:'One', emoji:'1️⃣'},
+      2:{word:'Two', emoji:'2️⃣'},
+      3:{word:'Three', emoji:'3️⃣'},
+      4:{word:'Four', emoji:'4️⃣'},
+      5:{word:'Five', emoji:'5️⃣'},
+      6:{word:'Six', emoji:'6️⃣'},
+      7:{word:'Seven', emoji:'7️⃣'},
+      8:{word:'Eight', emoji:'8️⃣'},
+      9:{word:'Nine', emoji:'9️⃣'},
+      10:{word:'Ten', emoji:'🔟'}
+    };
+
+    const abcWrap = document.querySelector('.alphabets');
+    for (let i = 65; i <= 90; i++){
+      const L = String.fromCharCode(i);
+      const btn = document.createElement('button');
+      btn.textContent = L;
+      btn.className = "bg-gradient-to-br from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white text-lg font-bold py-2 px-1 rounded-lg shadow transform hover:scale-105 transition-all duration-200 border border-blue-300 min-h-[40px]";
+      btn.addEventListener('click', () => {
+        const item = ABC[L];
+        speak(`${L} for ${item.word}`);
+        showVisual(L, item.word, '', item.emoji);
+      });
+      abcWrap.appendChild(btn);
+    }
+
+    const numWrap = document.querySelector('.numbers');
+    for (let n = 1; n <= 10; n++){
+      const btn = document.createElement('button');
+      btn.textContent = n;
+      btn.className = "bg-gradient-to-br from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white text-lg font-bold py-2 px-1 rounded-lg shadow transform hover:scale-105 transition-all duration-200 border border-orange-300 min-h-[40px]";
+      btn.addEventListener('click', () => {
+        const item = NUMS[n];
+        speak(`${n} ${item.word}`);
+        showVisual(n, item.word, '', item.emoji);
+      });
+      numWrap.appendChild(btn);
+    }
+
+    document.getElementById('customSpeak').addEventListener('click', () => {
+      const t = document.getElementById('customText').value.trim();
+      if(!t) return;
+      speak(t);
+      showVisual('Practice', t, '', '🗣️');
+    });
+
+    // Add Enter key support for custom text
+    document.getElementById('customText').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('customSpeak').click();
+      }
+    });
+  </script>
+</body>
+</html>
