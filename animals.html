@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Learn - Animals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: white;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            color: #333;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 25px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .item-card:active {
+            transform: scale(1.08);
+            animation: bounce 0.4s ease;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: scale(1.08);
+            }
+
+            50% {
+                transform: scale(1.12);
+            }
+        }
+
+        .item-icon {
+            font-size: 5rem;
+            margin-bottom: 15px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .item-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .item-sound {
+            font-size: 1.1rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .sound-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .item-card.playing .sound-indicator {
+            opacity: 1;
+            animation: soundWave 0.5s ease infinite;
+        }
+
+        @keyframes soundWave {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .items-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .item-card {
+                padding: 30px 15px;
+            }
+
+            .item-icon {
+                font-size: 4rem;
+            }
+
+            .item-name {
+                font-size: 1.5rem;
+            }
+
+            .item-sound {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .items-grid {
+                gap: 12px;
+            }
+
+            .item-card {
+                padding: 25px 12px;
+            }
+
+            .item-icon {
+                font-size: 3.5rem;
+            }
+
+            .item-name {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">🏠 Back Home</a>
+            <h1>🐶 Animals</h1>
+        </header>
+
+        <div class="items-grid" id="animalsGrid"></div>
+    </div>
+
+    <script>
+        const animals = [
+            { icon: '🐶', name: 'Dog', sound: './assets/sounds/dog.mp3', text: 'Woof Woof!' },
+            { icon: '🐱', name: 'Cat', sound: './assets/sounds/cat.mp3', text: 'Meow Meow!' },
+            { icon: '🦁', name: 'Lion', sound: './assets/sounds/lion.mp3', text: 'Roar!' },
+            { icon: '🐘', name: 'Elephant', sound: './assets/sounds/elephant.mp3', text: 'Trumpet!' },
+            { icon: '🐒', name: 'Monkey', sound: './assets/sounds/monkey.mp3', text: 'Ooh Ooh!' },
+            { icon: '🐯', name: 'Tiger', sound: './assets/sounds/tiger.mp3', text: 'Roar!' },
+            { icon: '🐻', name: 'Bear', sound: './assets/sounds/bear.mp3', text: 'Growl!' },
+            { icon: '🐼', name: 'Panda', sound: './assets/sounds/panda.mp3', text: 'Squeak!' },
+            { icon: '🦊', name: 'Fox', sound: './assets/sounds/fox.mp3', text: 'Yip Yip!' },
+            { icon: '🐮', name: 'Cow', sound: './assets/sounds/cow.mp3', text: 'Moo!' },
+            { icon: '🐷', name: 'Pig', sound: './assets/sounds/pig.mp3', text: 'Oink Oink!' },
+            { icon: '🐔', name: 'Chicken', sound: './assets/sounds/chicken.mp3', text: 'Cluck Cluck!' }
+        ];
+
+        const grid = document.getElementById('animalsGrid');
+        const synth = window.speechSynthesis;
+
+        animals.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.innerHTML = `
+                <div class="sound-indicator">🔊</div>
+                <div class="item-icon">${item.icon}</div>
+                <div class="item-name">${item.name}</div>
+                <div class="item-sound">${item.text}</div>
+            `;
+
+            card.addEventListener('click', () => {
+                card.classList.add('playing');
+
+                // First, speak the animal name
+                const utterance = new SpeechSynthesisUtterance(item.name);
+                utterance.rate = 0.8;
+                utterance.pitch = 1.2;
+
+                utterance.onend = () => {
+                    // After saying the name, play the sound
+                    const audio = new Audio(item.sound);
+
+                    audio.play().then(() => {
+                        // Audio playing successfully
+                        audio.onended = () => {
+                            card.classList.remove('playing');
+                        };
+                    }).catch(error => {
+                        // Fallback if audio file not found
+                        console.log(`Could not play ${item.sound}:`, error);
+                        const fallbackUtterance = new SpeechSynthesisUtterance(item.text);
+                        fallbackUtterance.rate = 0.8;
+                        fallbackUtterance.pitch = 1.2;
+                        fallbackUtterance.onend = () => {
+                            card.classList.remove('playing');
+                        };
+                        synth.speak(fallbackUtterance);
+                    });
+                };
+
+                synth.speak(utterance);
+            });
+
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+
+</html>

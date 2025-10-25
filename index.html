@@ -1,534 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Baby Learner Pro</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baby Learn - Home</title>
   <style>
-    .star-animation {
-      animation: sparkle 1s ease-in-out;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    @keyframes sparkle {
-      0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
-      50% { transform: scale(1.3) rotate(180deg); opacity: 0.8; }
+
+    body {
+      font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
-    .bounce-in {
-      animation: bounceIn 0.6s ease-out;
+
+    h1 {
+      color: white;
+      font-size: clamp(2rem, 8vw, 4rem);
+      text-align: center;
+      margin-bottom: 10px;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+      animation: bounce 1.5s ease-in-out infinite;
     }
-    @keyframes bounceIn {
-      0% { transform: scale(0.3); opacity: 0; }
-      50% { transform: scale(1.05); }
-      70% { transform: scale(0.9); }
-      100% { transform: scale(1); opacity: 1; }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
     }
-    .rainbow-text {
-      background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: rainbow 3s ease-in-out infinite;
+
+    h2 {
+      color: white;
+      font-size: clamp(1rem, 4vw, 1.8rem);
+      text-align: center;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
-    @keyframes rainbow {
-      0%, 100% { filter: hue-rotate(0deg); }
-      50% { filter: hue-rotate(180deg); }
+
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 900px;
+      padding: 10px;
     }
-    .celebration-stars {
-      position: absolute;
-      pointer-events: none;
+
+    .menu-card {
+      background: white;
+      border-radius: 25px;
+      padding: 40px 20px;
+      text-align: center;
+      text-decoration: none;
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      font-weight: bold;
+      color: #333;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 150px;
     }
-    .wrong-shake {
-      animation: shake 0.5s ease-in-out;
+
+    .menu-card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
     }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
+
+    .menu-card:active {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    /* Tablet styles */
+    @media (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
+
+      .menu {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        max-width: 600px;
+      }
+
+      .menu-card {
+        padding: 30px 15px;
+        min-height: 130px;
+      }
+
+      h1 {
+        margin-bottom: 8px;
+      }
+
+      h2 {
+        margin-bottom: 25px;
+      }
+    }
+
+    /* Mobile styles */
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+        justify-content: flex-start;
+        padding-top: 30px;
+      }
+
+      .menu {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        max-width: 400px;
+      }
+
+      .menu-card {
+        padding: 25px 20px;
+        min-height: 100px;
+        border-radius: 20px;
+      }
+
+      h1 {
+        margin-bottom: 5px;
+      }
+
+      h2 {
+        margin-bottom: 20px;
+      }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 320px) {
+      .menu-card {
+        padding: 20px 15px;
+        min-height: 90px;
+      }
+    }
+
+    /* Touch device optimization */
+    @media (hover: none) and (pointer: coarse) {
+      .menu-card:hover {
+        transform: none;
+      }
+
+      .menu-card:active {
+        transform: scale(0.95);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    /* Landscape mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+      body {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 5px;
+      }
+
+      h2 {
+        font-size: 1rem;
+        margin-bottom: 15px;
+      }
+
+      .menu {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .menu-card {
+        padding: 20px 10px;
+        min-height: 80px;
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
-<body class="bg-gradient-to-b from-yellow-50 to-pink-50 font-[Comic_Neue] text-center p-4 min-h-screen">
 
-  <h1 class="rainbow-text text-3xl font-bold mb-2 drop-shadow-lg">Baby Learner Pro 🌟</h1>
-  <p class="text-gray-700 mb-4 text-sm">Learn, Play, and Have Fun! 🎉</p>
+<body>
+  <h1>👶 Baby Learn</h1>
+  <h2>Choose What You Want to Learn!</h2>
 
- 
-  <!-- Mode Selection -->
-  <div class="flex justify-center gap-2 mb-4 flex-wrap">
-    <button id="learnMode" class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow hover:bg-blue-600 transition-all">
-      📚 Learn
-    </button>
-    <button id="quizMode" class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow hover:bg-purple-600 transition-all">
-      🧩 Quiz
-    </button>
-    <button id="memoryMode" class="bg-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow hover:bg-pink-600 transition-all">
-      🧠 Memory
-    </button>
-  </div>
-
-  <!-- Voice controls -->
-  <div class="flex justify-center gap-2 mb-4 text-xs">
-    <label class="flex items-center gap-1 bg-white px-2 py-1 rounded-xl border border-pink-200 shadow">
-      🔊
-      <input id="rate" type="range" min="0.5" max="1.25" step="0.05" value="0.8" class="w-12" />
-    </label>
-    <label class="flex items-center gap-1 bg-white px-2 py-1 rounded-xl border border-blue-200 shadow">
-      🎵
-      <input id="pitch" type="range" min="0.8" max="1.5" step="0.05" value="1.2" class="w-12" />
-    </label>
-    <button id="encourageBtn" class="bg-green-500 text-white px-2 py-1 rounded-xl text-xs font-bold shadow hover:bg-green-600">
-      💪 Cheer
-    </button>
-  </div>
-
-  <!-- Visual Display Area -->
-  <div class="mx-auto max-w-sm bg-white rounded-2xl p-4 shadow-lg mb-4 border-2 border-purple-200 relative">
-    <h3 id="wordTitle" class="text-lg font-bold text-gray-800 mb-2">🎯 Choose a letter!</h3>
-    <div class="bg-gradient-to-br from-yellow-100 to-pink-100 rounded-xl p-4 min-h-[140px] flex items-center justify-center relative">
-      <img id="wordImage" alt="" class="hidden mx-auto max-h-24 rounded-lg shadow" />
-      <div id="emojiShow" class="text-6xl">👶</div>
-      <div id="celebrationStars" class="celebration-stars"></div>
-    </div>
+  <div class="menu">
+    <a href="numbers.html" class="menu-card">🔢 Numbers</a>
+    <a href="letters.html" class="menu-card">🔤 Letters</a>
+    <a href="animals.html" class="menu-card">🐶 Animals</a>
+    <a href="fruits.html" class="menu-card">🍎 Fruits</a>
     
-    <!-- Quiz Question Area -->
-    <div id="quizArea" class="hidden mt-4">
-      <p id="quizQuestion" class="text-lg font-bold text-purple-600 mb-3"></p>
-      <div id="quizOptions" class="grid grid-cols-2 gap-2"></div>
-    </div>
-    
-    <!-- Memory Game Area -->
-    <div id="memoryArea" class="hidden mt-4">
-      <p class="text-lg font-bold text-pink-600 mb-3">Remember the sequence! 🧠</p>
-      <div id="memorySequence" class="flex justify-center gap-2 mb-3"></div>
-      <button id="memoryStart" class="bg-pink-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-pink-600">
-        Start Memory Game
-      </button>
-    </div>
+    <a href="colors.html" class="menu-card">🎨 Colors</a>
+    <a href="shapes.html" class="menu-card">🔺 Shapes</a>
   </div>
-
-  <!-- Learning Modes Tabs -->
-  <div id="learningContent">
-    <!-- Alphabets Section -->
-    <div class="mb-4">
-      <h2 class="text-lg font-bold text-blue-600 mb-2">🔤 Letters</h2>
-      <div class="grid grid-cols-6 gap-1 alphabets"></div>
-    </div>
-
-    <!-- Numbers Section -->
-    <div class="mb-4">
-      <h2 class="text-lg font-bold text-orange-600 mb-2">🔢 Numbers</h2>
-      <div class="grid grid-cols-5 gap-1 numbers"></div>
-    </div>
-
-   
-
-  <!-- Custom Text -->
-  <div class="bg-white rounded-xl p-3 shadow-lg border border-green-200 max-w-sm mx-auto mb-4">
-    <h3 class="text-sm font-bold text-green-600 mb-2">🗣️ Say Any Word!</h3>
-    <div class="flex gap-2">
-      <input type="text" id="customText" placeholder="Type a word…" 
-        class="flex-1 p-2 rounded-lg border border-gray-300 text-sm focus:border-green-400 focus:outline-none" />
-      <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg shadow font-bold text-sm" id="customSpeak">
-        🎤
-      </button>
-    </div>
-  </div>
-
-
-
-  <script>
-    const msg = new SpeechSynthesisUtterance();
-    let allVoices = [];
-    let currentMode = 'learn';
-    let score = 0;
-    let streak = 0;
-    let achievements = [];
-
-    // Game state
-    let memorySequence = [];
-    let userSequence = [];
-    let memoryRound = 0;
-
-   let voicesLoaded = false;
-
-function chooseFemaleVoice(voices){
-  const en = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('en'));
-  const preferNames = [
-    'Google UK English Female','Microsoft Zira','Samantha','Victoria',
-    'Karen','Tessa','Serena','Amira','Zira'
-  ];
-  let v = en.find(v => preferNames.some(n => v.name.includes(n)));
-  if(!v) v = en.find(v => /female|woman/i.test(v.name));
-  return v || en[0] || voices[0];
-}
-
-// Wait for voices to load before enabling speech
-function ensureVoicesLoaded(cb) {
-  if (voicesLoaded) {
-    cb();
-  } else {
-    speechSynthesis.addEventListener('voiceschanged', () => {
-      voicesLoaded = true;
-      cb();
-    }, { once: true });
-  }
-}
-
-function speak(text) {
-  ensureVoicesLoaded(() => {
-    const voices = speechSynthesis.getVoices();
-    const chosen = chooseFemaleVoice(voices);
-    const utter = new SpeechSynthesisUtterance();
-    utter.text = text;
-    utter.rate = parseFloat(rateEl.value || 0.8);
-    utter.pitch = parseFloat(pitchEl.value || 1.2);
-    if (chosen) utter.voice = chosen;
-    speechSynthesis.cancel();
-    speechSynthesis.speak(utter);
-  });
-}
-
-// Now when you call speak("A for Apple"), it will always work.
-    function loadVoices(){
-      allVoices = speechSynthesis.getVoices();
-      const chosen = chooseFemaleVoice(allVoices);
-      if (chosen) msg.voice = chosen;
-    }
-    speechSynthesis.addEventListener('voiceschanged', loadVoices);
-    loadVoices();
-
-    const rateEl = document.getElementById('rate');
-    const pitchEl = document.getElementById('pitch');
-
-    function speak(text){
-      msg.text = text;
-      msg.rate = parseFloat(rateEl.value || 0.8);
-      msg.pitch = parseFloat(pitchEl.value || 1.2);
-      speechSynthesis.cancel();
-      speechSynthesis.speak(msg);
-    }
-
-    // Celebration and feedback
-  
-   
-
-    function updateScore(points) {
-      score += points;
-      streak++;
-      document.getElementById('score').textContent = score;
-      document.getElementById('streak').textContent = streak;
-      checkAchievements();
-    }
-
-    function resetStreak() {
-      streak = 0;
-      document.getElementById('streak').textContent = streak;
-    }
-
-    function checkAchievements() {
-      const newAchievements = [];
-      if (score >= 50 && !achievements.includes('🎯')) {
-        newAchievements.push('🎯');
-        achievements.push('🎯');
-      }
-      if (score >= 100 && !achievements.includes('🏆')) {
-        newAchievements.push('🏆');
-        achievements.push('🏆');
-      }
-      if (streak >= 5 && !achievements.includes('🔥')) {
-        newAchievements.push('🔥');
-        achievements.push('🔥');
-      }
-      if (streak >= 10 && !achievements.includes('⚡')) {
-        newAchievements.push('⚡');
-        achievements.push('⚡');
-      }
-      
-      if (newAchievements.length > 0) {
-        updateAchievementDisplay();
-        speak('New achievement unlocked!');
-      }
-    }
-
-    function updateAchievementDisplay() {
-      document.getElementById('achievementList').innerHTML = achievements.join(' ');
-    }
-
-    const titleEl = document.getElementById('wordTitle');
-    const imgEl = document.getElementById('wordImage');
-    const emojiEl = document.getElementById('emojiShow');
-    
-    function showVisual(label, word, imgPath, emoji, bounce = true){
-      titleEl.innerHTML = `<span class="text-pink-500">${label}</span> — ${word}`;
-      titleEl.className = "text-lg font-bold text-gray-800 mb-2" + (bounce ? " bounce-in" : "");
-      
-      if (imgPath){
-        imgEl.style.display = 'none';
-        imgEl.src = imgPath;
-        imgEl.onload = () => { 
-          imgEl.classList.remove('hidden'); 
-          emojiEl.classList.add('hidden');
-          imgEl.className = "mx-auto max-h-24 rounded-lg shadow" + (bounce ? " bounce-in" : "");
-        };
-        imgEl.onerror = () => { 
-          imgEl.classList.add('hidden'); 
-          emojiEl.textContent = emoji || '🖼️'; 
-          emojiEl.classList.remove('hidden');
-          emojiEl.className = "text-6xl" + (bounce ? " bounce-in" : "");
-        };
-      } else {
-        imgEl.classList.add('hidden');
-        emojiEl.textContent = emoji || '🖼️';
-        emojiEl.classList.remove('hidden');
-        emojiEl.className = "text-6xl" + (bounce ? " bounce-in" : "");
-      }
-    }
-
-    // Data sets
-    const ABC = {
-      A:{word:'Apple', emoji:'🍎'}, B:{word:'Ball', emoji:'⚽'}, C:{word:'Cat', emoji:'🐱'},
-      D:{word:'Dog', emoji:'🐶'}, E:{word:'Elephant', emoji:'🐘'}, F:{word:'Fish', emoji:'🐟'},
-      G:{word:'Goat', emoji:'🐐'}, H:{word:'Hat', emoji:'🎩'}, I:{word:'Ice cream', emoji:'🍦'},
-      J:{word:'Juice', emoji:'🧃'}, K:{word:'Kite', emoji:'🪁'}, L:{word:'Lion', emoji:'🦁'},
-      M:{word:'Monkey', emoji:'🐵'}, N:{word:'Nest', emoji:'🪺'}, O:{word:'Orange', emoji:'🍊'},
-      P:{word:'Pen', emoji:'🖊️'}, Q:{word:'Queen', emoji:'👑'}, R:{word:'Rabbit', emoji:'🐰'},
-      S:{word:'Sun', emoji:'☀️'}, T:{word:'Tiger', emoji:'🐯'}, U:{word:'Umbrella', emoji:'☂️'},
-      V:{word:'Van', emoji:'🚐'}, W:{word:'Watermelon', emoji:'🍉'}, X:{word:'Xylophone', emoji:'🎵'},
-      Y:{word:'Yam', emoji:'🍠'}, Z:{word:'Zebra', emoji:'🦓'}
-    };
-
-    const NUMS = {
-      1:{word:'One', emoji:'1️⃣'}, 2:{word:'Two', emoji:'2️⃣'}, 3:{word:'Three', emoji:'3️⃣'},
-      4:{word:'Four', emoji:'4️⃣'}, 5:{word:'Five', emoji:'5️⃣'}, 6:{word:'Six', emoji:'6️⃣'},
-      7:{word:'Seven', emoji:'7️⃣'}, 8:{word:'Eight', emoji:'8️⃣'}, 9:{word:'Nine', emoji:'9️⃣'},
-      10:{word:'Ten', emoji:'🔟'}
-    };
-
-    const COLORS = {
-      Red:{word:'Red', emoji:'❤️'}, Blue:{word:'Blue', emoji:'💙'},
-      Green:{word:'Green', emoji:'💚'}, Yellow:{word:'Yellow', emoji:'💛'},
-      Purple:{word:'Purple', emoji:'💜'}, Orange:{word:'Orange', emoji:'🧡'},
-      Pink:{word:'Pink', emoji:'🩷'}, Brown:{word:'Brown', emoji:'🤎'}
-    };
-
-    const SHAPES = {
-      Circle:{word:'Circle', emoji:'⭕'}, Square:{word:'Square', emoji:'⬜'},
-      Triangle:{word:'Triangle', emoji:'🔺'}, Star:{word:'Star', emoji:'⭐'},
-      Heart:{word:'Heart', emoji:'💖'}, Diamond:{word:'Diamond', emoji:'💎'}
-    };
-
-    // Mode switching
-    function setMode(mode) {
-      currentMode = mode;
-      document.querySelectorAll('[id$="Mode"]').forEach(btn => {
-        btn.classList.remove('ring-2', 'ring-white');
-      });
-      document.getElementById(mode + 'Mode').classList.add('ring-2', 'ring-white');
-      
-      // Hide all game areas
-      document.getElementById('quizArea').classList.add('hidden');
-      document.getElementById('memoryArea').classList.add('hidden');
-      document.getElementById('learningContent').classList.remove('hidden');
-      
-      if (mode === 'quiz') {
-        startQuiz();
-      } else if (mode === 'memory') {
-        document.getElementById('learningContent').classList.add('hidden');
-        document.getElementById('memoryArea').classList.remove('hidden');
-      }
-    }
-
-    // Quiz mode
-    function startQuiz() {
-      const categories = ['ABC', 'NUMS', 'COLORS', 'SHAPES'];
-      const category = categories[Math.floor(Math.random() * categories.length)];
-      const dataSet = category === 'ABC' ? ABC : category === 'NUMS' ? NUMS : 
-                     category === 'COLORS' ? COLORS : SHAPES;
-      
-      const keys = Object.keys(dataSet);
-      const correctKey = keys[Math.floor(Math.random() * keys.length)];
-      const correctAnswer = dataSet[correctKey];
-      
-      // Generate wrong answers
-      const wrongAnswers = keys.filter(k => k !== correctKey)
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3)
-        .map(k => dataSet[k]);
-      
-      const allOptions = [correctAnswer, ...wrongAnswers].sort(() => 0.5 - Math.random());
-      
-      document.getElementById('learningContent').classList.add('hidden');
-      document.getElementById('quizArea').classList.remove('hidden');
-      
-      showVisual('Quiz', correctAnswer.word, '', correctAnswer.emoji);
-      speak(`What letter does ${correctAnswer.word} start with?`);
-      
-      document.getElementById('quizQuestion').textContent = 
-        category === 'NUMS' ? `Which number is ${correctAnswer.word}?` :
-        `What does ${correctAnswer.emoji} start with?`;
-      
-      const optionsDiv = document.getElementById('quizOptions');
-      optionsDiv.innerHTML = '';
-      
-      allOptions.forEach(option => {
-        const btn = document.createElement('button');
-        btn.textContent = category === 'ABC' ? Object.keys(dataSet).find(k => dataSet[k] === option) : 
-                         category === 'NUMS' ? Object.keys(dataSet).find(k => dataSet[k] === option) :
-                         option.word;
-        btn.className = "bg-purple-400 hover:bg-purple-500 text-white font-bold py-2 px-3 rounded-lg shadow";
-        btn.addEventListener('click', () => {
-          if (option === correctAnswer) {
-            celebrate(true);
-            setTimeout(() => startQuiz(), 2000);
-          } else {
-            celebrate(false);
-            resetStreak();
-          }
-        });
-        optionsDiv.appendChild(btn);
-      });
-    }
-
-    // Memory game
-    function startMemoryGame() {
-      memorySequence = [];
-      userSequence = [];
-      memoryRound = 0;
-      addToSequence();
-    }
-
-    function addToSequence() {
-      const colors = ['red', 'blue', 'green', 'yellow'];
-      const newColor = colors[Math.floor(Math.random() * colors.length)];
-      memorySequence.push(newColor);
-      memoryRound++;
-      
-      showSequence();
-    }
-
-    function showSequence() {
-      const sequenceDiv = document.getElementById('memorySequence');
-      sequenceDiv.innerHTML = '';
-      
-      memorySequence.forEach((color, index) => {
-        const btn = document.createElement('button');
-        btn.className = `w-12 h-12 rounded-full bg-${color}-400 border-4 border-white shadow-lg`;
-        btn.style.animationDelay = `${index * 0.5}s`;
-        btn.addEventListener('click', () => handleMemoryClick(color));
-        
-        setTimeout(() => {
-          btn.classList.add('ring-4', 'ring-white');
-          setTimeout(() => btn.classList.remove('ring-4', 'ring-white'), 300);
-        }, index * 600);
-        
-        sequenceDiv.appendChild(btn);
-      });
-      
-      userSequence = [];
-    }
-
-    function handleMemoryClick(color) {
-      userSequence.push(color);
-      
-      if (userSequence[userSequence.length - 1] !== memorySequence[userSequence.length - 1]) {
-        celebrate(false);
-        resetStreak();
-        setTimeout(startMemoryGame, 1000);
-        return;
-      }
-      
-      if (userSequence.length === memorySequence.length) {
-        celebrate(true);
-        setTimeout(addToSequence, 1000);
-      }
-    }
-
-    // Create buttons
-    function createButtons() {
-      // Alphabets
-      const abcWrap = document.querySelector('.alphabets');
-      for (let i = 65; i <= 90; i++){
-        const L = String.fromCharCode(i);
-        const btn = document.createElement('button');
-        btn.textContent = L;
-        btn.className = "bg-gradient-to-br from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white text-lg font-bold py-2 px-1 rounded-lg shadow transform hover:scale-105 transition-all duration-200 border border-blue-300 min-h-[40px]";
-        btn.addEventListener('click', () => {
-          const item = ABC[L];
-          speak(`${L} for ${item.word}`);
-          showVisual(L, item.word, '', item.emoji);
-          if (currentMode === 'learn') celebrate();
-        });
-        abcWrap.appendChild(btn);
-      }
-
-      // Numbers
-      const numWrap = document.querySelector('.numbers');
-      for (let n = 1; n <= 10; n++){
-        const btn = document.createElement('button');
-        btn.textContent = n;
-        btn.className = "bg-gradient-to-br from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white text-lg font-bold py-2 px-1 rounded-lg shadow transform hover:scale-105 transition-all duration-200 border border-orange-300 min-h-[40px]";
-        btn.addEventListener('click', () => {
-          const item = NUMS[n];
-          speak(`${n} ${item.word}`);
-          showVisual(n, item.word, '', item.emoji);
-          if (currentMode === 'learn') celebrate();
-        });
-        numWrap.appendChild(btn);
-      }
-
-      // Colors
-      const colorWrap = document.querySelector('.colors');
-      Object.entries(COLORS).forEach(([key, item]) => {
-        const btn = document.createElement('button');
-        btn.textContent = key;
-        btn.className = `bg-gradient-to-br from-${key.toLowerCase()}-400 to-${key.toLowerCase()}-500 hover:from-${key.toLowerCase()}-500 hover:to-${key.toLowerCase()}-600 text-white text-sm font-bold py-2 px-1 rounded-lg shadow transform hover:scale-105 transition-all duration-200 min-h-[40px]`;
-        btn.addEventListener('click', () => {
-          speak(`${key} color`);
-          showVisual(key, item.word, '', item.emoji);
-          if (currentMode === 'learn') celebrate();
-        });
-        colorWrap.appendChild(btn);
-      });
-
-      // Shapes
-      const shapeWrap = document.querySelector('.shapes');
-      Object.entries(SHAPES).forEach(([key, item]) => {
-        const btn = document.createElement('button');
-        btn.textContent = key;
-        btn.className = "bg-gradient-to-br from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 text-white text-sm font-bold py-2 px-1 rounded-lg shadow transform hover:scale-105 transition-all duration-200 min-h-[40px]";
-        btn.addEventListener('click', () => {
-          speak(`${key} shape`);
-          showVisual(key, item.word, '', item.emoji);
-          if (currentMode === 'learn') celebrate();
-        });
-        shapeWrap.appendChild(btn);
-      });
-    }
-
-    // Event listeners
-    document.getElementById('learnMode').addEventListener('click', () => setMode('learn'));
-    document.getElementById('quizMode').addEventListener('click', () => setMode('quiz'));
-    document.getElementById('memoryMode').addEventListener('click', () => setMode('memory'));
-    document.getElementById('memoryStart').addEventListener('click', startMemoryGame);
-    document.getElementById('encourageBtn').addEventListener('click', () => playEncouragement('general'));
-
-    document.getElementById('customSpeak').addEventListener('click', () => {
-      const t = document.getElementById('customText').value.trim();
-      if(!t) return;
-      speak(t);
-      showVisual('Practice', t, '', '🗣️');
-      celebrate();
-    });
-
-    document.getElementById('customText').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        document.getElementById('customSpeak').click();
-      }
-    });
-
-    // Initialize
-    createButtons();
-    setMode('learn');
-  </script>
 </body>
+
 </html>

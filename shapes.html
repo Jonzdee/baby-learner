@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Learn - Shapes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: white;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            color: #333;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 25px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .item-card:active {
+            transform: scale(1.08);
+            animation: spin 0.6s ease;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: scale(1.08) rotate(0deg);
+            }
+
+            100% {
+                transform: scale(1.08) rotate(360deg);
+            }
+        }
+
+        .shape-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .shape {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .square {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 104px solid #43e97b;
+        }
+
+        .rectangle {
+            width: 110px;
+            height: 70px;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .star {
+            font-size: 100px;
+            color: #FFD700;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .heart {
+            font-size: 100px;
+            color: #FF1493;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .diamond {
+            width: 0;
+            height: 0;
+            border: 50px solid transparent;
+            border-bottom: 70px solid #4facfe;
+            position: relative;
+            top: -50px;
+        }
+
+        .diamond:after {
+            content: '';
+            position: absolute;
+            left: -50px;
+            top: 70px;
+            width: 0;
+            height: 0;
+            border: 50px solid transparent;
+            border-top: 70px solid #4facfe;
+        }
+
+        .oval {
+            width: 110px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .item-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .sound-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .item-card.playing .sound-indicator {
+            opacity: 1;
+            animation: soundWave 0.5s ease infinite;
+        }
+
+        @keyframes soundWave {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .items-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .item-card {
+                padding: 30px 15px;
+            }
+
+            .shape-container {
+                width: 100px;
+                height: 100px;
+            }
+
+            .circle,
+            .square {
+                width: 80px;
+                height: 80px;
+            }
+
+            .rectangle {
+                width: 90px;
+                height: 60px;
+            }
+
+            .oval {
+                width: 90px;
+                height: 60px;
+            }
+
+            .star,
+            .heart {
+                font-size: 80px;
+            }
+
+            .item-name {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .items-grid {
+                gap: 12px;
+            }
+
+            .item-card {
+                padding: 25px 12px;
+            }
+
+            .shape-container {
+                width: 80px;
+                height: 80px;
+            }
+
+            .circle,
+            .square {
+                width: 70px;
+                height: 70px;
+            }
+
+            .rectangle {
+                width: 75px;
+                height: 50px;
+            }
+
+            .oval {
+                width: 75px;
+                height: 50px;
+            }
+
+            .star,
+            .heart {
+                font-size: 70px;
+            }
+
+            .item-name {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">🏠 Back Home</a>
+            <h1>🔺 Shapes</h1>
+        </header>
+
+        <div class="items-grid" id="shapesGrid"></div>
+    </div>
+
+    <script>
+        const shapes = [
+            { name: 'Circle', shapeClass: 'circle' },
+            { name: 'Square', shapeClass: 'square' },
+            { name: 'Triangle', shapeClass: 'triangle' },
+            { name: 'Rectangle', shapeClass: 'rectangle' },
+            { name: 'Star', shapeClass: 'star', emoji: '⭐' },
+            { name: 'Heart', shapeClass: 'heart', emoji: '❤️' },
+            { name: 'Diamond', shapeClass: 'diamond' },
+            { name: 'Oval', shapeClass: 'oval' }
+        ];
+
+        const grid = document.getElementById('shapesGrid');
+        const synth = window.speechSynthesis;
+
+        shapes.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+
+            const shapeHTML = item.emoji
+                ? `<div class="${item.shapeClass}">${item.emoji}</div>`
+                : `<div class="shape ${item.shapeClass}"></div>`;
+
+            card.innerHTML = `
+        <div class="sound-indicator">🔊</div>
+        <div class="shape-container">
+          ${shapeHTML}
+        </div>
+        <div class="item-name">${item.name}</div>
+      `;
+
+            card.addEventListener('click', () => {
+                card.classList.add('playing');
+
+                const utterance = new SpeechSynthesisUtterance(item.name);
+                utterance.rate = 0.8;
+                utterance.pitch = 1.2;
+
+                utterance.onend = () => {
+                    card.classList.remove('playing');
+                };
+
+                synth.speak(utterance);
+            });
+
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+
+</html>

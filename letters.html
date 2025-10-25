@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Learn - Letters</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: white;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            color: #333;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            animation: pulse-btn 1s ease infinite;
+        }
+
+        @keyframes pulse-btn {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .item-card:active {
+            transform: scale(1.1);
+            animation: pulse 0.3s ease;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1.1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .letter-display {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .letter-lowercase {
+            font-size: 1.8rem;
+            color: #f5576c;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .letter-image {
+            width: 80px;
+            height: 80px;
+            margin: 10px auto;
+            background: #f0f0f0;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 3px dashed #ccc;
+        }
+
+        .letter-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .letter-word {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .sound-indicator {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .item-card.playing .sound-indicator {
+            opacity: 1;
+            animation: soundWave 0.5s ease infinite;
+        }
+
+        @keyframes soundWave {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .items-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+
+            .item-card {
+                padding: 15px 10px;
+            }
+
+            .letter-display {
+                font-size: 2.8rem;
+            }
+
+            .letter-lowercase {
+                font-size: 1.5rem;
+            }
+
+            .letter-image {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+
+            .letter-word {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .items-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .item-card {
+                padding: 15px 8px;
+            }
+
+            .letter-display {
+                font-size: 2.5rem;
+            }
+
+            .letter-lowercase {
+                font-size: 1.2rem;
+            }
+
+            .letter-image {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .letter-word {
+                font-size: 0.8rem;
+            }
+
+            .mode-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">🏠 Back Home</a>
+            <h1>🔤 Letters A-Z</h1>
+            <div class="control-buttons">
+                <button class="mode-btn" id="readABCBtn">🔤 Read ABC Only</button>
+                <button class="mode-btn" id="readWithWordsBtn">📖 Read A-Z with Words</button>
+            </div>
+        </header>
+
+        <div class="items-grid" id="lettersGrid"></div>
+    </div>
+
+    <script>
+        const letters = [
+            { letter: 'A', word: 'Apple', image: './assets/images/abc/apple.png' },
+            { letter: 'B', word: 'Ball', image: './assets/images/abc/ball.png' },
+            { letter: 'C', word: 'Cat', image: 'https://cdn.pixabay.com/photo/2023/04/07/07/14/cat-7905702_960_720.jpg' },
+            { letter: 'D', word: 'Dog', image: './assets/images/abc/dog.png' },
+            { letter: 'E', word: 'Egg', image: './assets/images/abc/egg.jpg' },
+            { letter: 'F', word: 'Fish', image: 'https://cdn.pixabay.com/photo/2017/08/31/14/40/fish-2700930_1280.png' },
+            { letter: 'G', word: 'Goat', image: 'https://cdn.pixabay.com/photo/2018/09/05/13/37/goat-3656281_1280.jpg' },
+            { letter: 'H', word: 'Hat', image: 'https://cdn.pixabay.com/photo/2017/04/28/17/46/hat-2268995_1280.png' },
+            { letter: 'I', word: 'Ice Cream', image: 'https://cdn.pixabay.com/photo/2017/09/08/05/46/ice-2727806_1280.png' },
+            { letter: 'J', word: 'Juice', image: 'https://cdn.pixabay.com/photo/2012/11/28/09/31/orange-juice-67556_960_720.jpg' },
+            { letter: 'K', word: 'Kite', image: 'https://cdn.pixabay.com/photo/2016/03/16/18/01/kite-1261396_1280.jpg' },
+            { letter: 'L', word: 'Lion', image: 'https://cdn.pixabay.com/photo/2023/06/29/10/33/lion-8096155_1280.png' },
+            { letter: 'M', word: 'Monkey', image: 'https://cdn.pixabay.com/photo/2018/09/25/21/32/monkey-3703230_1280.jpg' },
+            { letter: 'N', word: 'Nest', image: 'https://cdn.pixabay.com/photo/2020/08/14/15/53/nest-5488367_1280.jpg' },
+            { letter: 'O', word: 'Orange', image: 'https://cdn.pixabay.com/photo/2017/04/04/17/42/fruits-2202427_1280.jpg' },
+            { letter: 'P', word: 'pig', image: 'https://cdn.pixabay.com/photo/2023/02/21/18/03/ai-generated-7804787_1280.jpg' },
+            { letter: 'Q', word: 'Queen', image: 'https://cdn.pixabay.com/photo/2022/10/28/09/02/woman-7552669_960_720.jpg' },
+            { letter: 'R', word: 'Rat', image: 'https://cdn.pixabay.com/photo/2014/09/10/17/44/rat-440987_1280.jpg' },
+            { letter: 'S', word: 'Salt', image: 'https://cdn.pixabay.com/photo/2015/01/17/12/55/salt-602215_1280.jpg' },
+            { letter: 'T', word: 'Tiger', image: 'https://cdn.pixabay.com/photo/2017/10/27/21/51/tiger-2895617_960_720.jpg' },
+            { letter: 'U', word: 'Umbrella', image: 'https://cdn.pixabay.com/photo/2016/03/05/21/50/cocktail-umbrella-1239115_1280.jpg' },
+            { letter: 'V', word: 'Van', image: 'https://cdn.pixabay.com/photo/2022/07/31/20/32/volkswagen-7356817_1280.jpg' },
+            { letter: 'W', word: 'Window', image: 'https://cdn.pixabay.com/photo/2016/10/05/15/33/window-1716930_1280.jpg' },
+            { letter: 'X', word: 'Xylophone', image: 'https://cdn.pixabay.com/photo/2016/11/23/15/36/close-up-1853572_1280.jpg' },
+            { letter: 'Y', word: 'Yo-yo', image: 'https://cdn.pixabay.com/photo/2022/02/06/13/31/animal-6997104_1280.jpg' },
+            { letter: 'Z', word: 'Zebra', image: 'https://cdn.pixabay.com/photo/2022/02/06/13/31/animal-6997104_1280.jpg' }
+        ];
+
+        const grid = document.getElementById('lettersGrid');
+        const synth = window.speechSynthesis;
+        const readABCBtn = document.getElementById('readABCBtn');
+        const readWithWordsBtn = document.getElementById('readWithWordsBtn');
+        let isReading = false;
+
+        // Function to read ABC only (just letters)
+        function readABCOnly() {
+            if (isReading) return;
+
+            isReading = true;
+            readABCBtn.classList.add('active');
+
+            let currentIndex = 0;
+
+            function readNext() {
+                if (currentIndex >= letters.length) {
+                    isReading = false;
+                    readABCBtn.classList.remove('active');
+                    return;
+                }
+
+                const item = letters[currentIndex];
+                const cards = document.querySelectorAll('.item-card');
+                const currentCard = cards[currentIndex];
+
+                currentCard.classList.add('playing');
+
+                const utterance = new SpeechSynthesisUtterance(item.letter);
+                utterance.rate = 0.7;
+                utterance.pitch = 1.2;
+
+                utterance.onend = () => {
+                    currentCard.classList.remove('playing');
+                    currentIndex++;
+                    setTimeout(readNext, 600);
+                };
+
+                synth.speak(utterance);
+            }
+
+            readNext();
+        }
+
+        // Function to read with words (A for Apple)
+        function readWithWords() {
+            if (isReading) return;
+
+            isReading = true;
+            readWithWordsBtn.classList.add('active');
+
+            let currentIndex = 0;
+
+            function readNext() {
+                if (currentIndex >= letters.length) {
+                    isReading = false;
+                    readWithWordsBtn.classList.remove('active');
+                    return;
+                }
+
+                const item = letters[currentIndex];
+                const cards = document.querySelectorAll('.item-card');
+                const currentCard = cards[currentIndex];
+
+                currentCard.classList.add('playing');
+
+                const utterance = new SpeechSynthesisUtterance(`${item.letter} for ${item.word}`);
+                utterance.rate = 0.7;
+                utterance.pitch = 1.2;
+
+                utterance.onend = () => {
+                    currentCard.classList.remove('playing');
+                    currentIndex++;
+                    setTimeout(readNext, 800);
+                };
+
+                synth.speak(utterance);
+            }
+
+            readNext();
+        }
+
+        // Button click events
+        readABCBtn.addEventListener('click', readABCOnly);
+        readWithWordsBtn.addEventListener('click', readWithWords);
+
+        // Create letter cards
+        letters.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.innerHTML = `
+                <div class="sound-indicator">🔊</div>
+                <div class="letter-display">${item.letter}</div>
+                <div class="letter-lowercase">${item.letter.toLowerCase()}</div>
+                <div class="letter-image">
+                    <img src="${item.image}" alt="${item.word}" onerror="this.style.display='none'; this.parentElement.innerHTML='🖼️'">
+                </div>
+                <div class="letter-word">${item.word}</div>
+            `;
+
+            // Individual card click - say letter and word
+            card.addEventListener('click', () => {
+                // Play this card independently without stopping anything
+                card.classList.add('playing');
+
+                const utterance = new SpeechSynthesisUtterance(`${item.letter} for ${item.word}`);
+                utterance.rate = 0.8;
+                utterance.pitch = 1.2;
+
+                utterance.onend = () => {
+                    card.classList.remove('playing');
+                };
+
+                synth.speak(utterance);
+            });
+
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+
+</html>

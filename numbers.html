@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Learn - Numbers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .read-all-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin: 10px;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .read-all-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .read-all-btn:active {
+            transform: scale(0.98);
+        }
+
+        .read-all-btn.reading {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            animation: pulse-btn 1s ease infinite;
+        }
+
+        @keyframes pulse-btn {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        h1 {
+            color: white;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            color: #333;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .item-card:active {
+            transform: scale(1.1);
+            animation: pulse 0.3s ease;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1.1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .number-display {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .number-word {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .number-visual {
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+
+        .sound-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .item-card.playing .sound-indicator {
+            opacity: 1;
+            animation: soundWave 0.5s ease infinite;
+        }
+
+        @keyframes soundWave {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .items-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .item-card {
+                padding: 30px 15px;
+            }
+
+            .number-display {
+                font-size: 4rem;
+            }
+
+            .number-word {
+                font-size: 1.5rem;
+            }
+
+            .number-visual {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .items-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .item-card {
+                padding: 25px 10px;
+            }
+
+            .number-display {
+                font-size: 3rem;
+            }
+
+            .number-word {
+                font-size: 1.2rem;
+            }
+
+            .number-visual {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">🏠 Back Home</a>
+            <h1>🔢 Numbers 1-10</h1>
+            <button class="read-all-btn" id="readAllBtn">📢 Read All Numbers</button>
+        </header>
+
+        <div class="items-grid" id="numbersGrid"></div>
+    </div>
+
+    <script>
+        const numbers = [
+            { num: 1, word: 'One', visual: '⭐' },
+            { num: 2, word: 'Two', visual: '⭐⭐' },
+            { num: 3, word: 'Three', visual: '⭐⭐⭐' },
+            { num: 4, word: 'Four', visual: '⭐⭐⭐⭐' },
+            { num: 5, word: 'Five', visual: '⭐⭐⭐⭐⭐' },
+            { num: 6, word: 'Six', visual: '🎈🎈🎈🎈🎈🎈' },
+            { num: 7, word: 'Seven', visual: '🎈🎈🎈🎈🎈🎈🎈' },
+            { num: 8, word: 'Eight', visual: '🎈🎈🎈🎈🎈🎈🎈🎈' },
+            { num: 9, word: 'Nine', visual: '🎈🎈🎈🎈🎈🎈🎈🎈🎈' },
+            { num: 10, word: 'Ten', visual: '🎈🎈🎈🎈🎈🎈🎈🎈🎈🎈' }
+        ];
+
+        const grid = document.getElementById('numbersGrid');
+        const synth = window.speechSynthesis;
+        const readAllBtn = document.getElementById('readAllBtn');
+        let isReading = false;
+
+        // Function to read all numbers slowly
+        function readAllNumbers() {
+            if (isReading) return;
+
+            isReading = true;
+            readAllBtn.classList.add('reading');
+            readAllBtn.textContent = '🔊 Reading...';
+
+            let currentIndex = 0;
+
+            function readNext() {
+                if (currentIndex >= numbers.length) {
+                    // Finished reading all numbers
+                    isReading = false;
+                    readAllBtn.classList.remove('reading');
+                    readAllBtn.textContent = '📢 Read All Numbers';
+                    return;
+                }
+
+                const item = numbers[currentIndex];
+                const cards = document.querySelectorAll('.item-card');
+                const currentCard = cards[currentIndex];
+
+                // Highlight current card
+                currentCard.classList.add('playing');
+
+                // Say the number
+                const utterance = new SpeechSynthesisUtterance(`${item.num}`);
+                utterance.rate = 0.7; // Slower for reading all
+                utterance.pitch = 1.2;
+
+                utterance.onend = () => {
+                    currentCard.classList.remove('playing');
+                    currentIndex++;
+                    // Wait 800ms before next number
+                    setTimeout(readNext, 800);
+                };
+
+                synth.speak(utterance);
+            }
+
+            readNext();
+        }
+
+        // Read All button click event
+        readAllBtn.addEventListener('click', readAllNumbers);
+
+        numbers.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.innerHTML = `
+                <div class="sound-indicator">🔊</div>
+                <div class="number-display">${item.num}</div>
+                <div class="number-word">${item.word}</div>
+                <div class="number-visual">${item.visual}</div>
+            `;
+
+            card.addEventListener('click', () => {
+                card.classList.add('playing');
+
+                // Just say the number once
+                const utterance = new SpeechSynthesisUtterance(`${item.num}`);
+                utterance.rate = 0.8;
+                utterance.pitch = 1.2;
+
+                utterance.onend = () => {
+                    card.classList.remove('playing');
+                };
+
+                synth.speak(utterance);
+            });
+
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+
+</html>
