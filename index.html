@@ -14,79 +14,324 @@
 
     body {
       font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #FFD93D 0%, #FF6B9D 25%, #C8E4FF 50%, #A8E6CF 75%, #FFD93D 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
       min-height: 100vh;
       padding: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Super fun floating shapes in background */
+    .floating-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .shape {
+      position: absolute;
+      font-size: 3rem;
+      animation: floatAround 15s linear infinite;
+      opacity: 0.6;
+    }
+
+    .shape:nth-child(1) {
+      left: 10%;
+      animation-duration: 12s;
+      animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+      left: 20%;
+      animation-duration: 15s;
+      animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+      left: 30%;
+      animation-duration: 18s;
+      animation-delay: 4s;
+    }
+
+    .shape:nth-child(4) {
+      left: 40%;
+      animation-duration: 13s;
+      animation-delay: 1s;
+    }
+
+    .shape:nth-child(5) {
+      left: 50%;
+      animation-duration: 16s;
+      animation-delay: 3s;
+    }
+
+    .shape:nth-child(6) {
+      left: 60%;
+      animation-duration: 14s;
+      animation-delay: 5s;
+    }
+
+    .shape:nth-child(7) {
+      left: 70%;
+      animation-duration: 17s;
+      animation-delay: 2s;
+    }
+
+    .shape:nth-child(8) {
+      left: 80%;
+      animation-duration: 19s;
+      animation-delay: 4s;
+    }
+
+    .shape:nth-child(9) {
+      left: 90%;
+      animation-duration: 15s;
+      animation-delay: 1s;
+    }
+
+    @keyframes floatAround {
+      0% {
+        transform: translateY(100vh) rotate(0deg) scale(1);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.6;
+      }
+
+      90% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(-100vh) rotate(720deg) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
       color: white;
-      font-size: clamp(2rem, 8vw, 4rem);
+      font-size: clamp(2.5rem, 12vw, 6rem);
       text-align: center;
-      margin-bottom: 10px;
-      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-      animation: bounce 1.5s ease-in-out infinite;
+      margin-bottom: 15px;
+      text-shadow: 5px 5px 0px #FF1493, 8px 8px 0px #FFD700;
+      animation: bigWiggle 1.5s ease-in-out infinite;
+      letter-spacing: 5px;
+      font-weight: 900;
+      transform-origin: center;
     }
 
-    @keyframes bounce {
+    @keyframes bigWiggle {
 
       0%,
       100% {
-        transform: translateY(0);
+        transform: rotate(-5deg) scale(1);
+      }
+
+      25% {
+        transform: rotate(5deg) scale(1.05);
       }
 
       50% {
-        transform: translateY(-10px);
+        transform: rotate(-5deg) scale(1);
+      }
+
+      75% {
+        transform: rotate(5deg) scale(1.05);
       }
     }
 
     h2 {
       color: white;
-      font-size: clamp(1rem, 4vw, 1.8rem);
+      font-size: clamp(1.3rem, 6vw, 2.5rem);
       text-align: center;
-      margin-bottom: 30px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      margin-bottom: 40px;
+      text-shadow: 3px 3px 0px #FF6B9D, 5px 5px 0px #FFD700;
+      animation: rainbowBounce 2s ease-in-out infinite;
+      font-weight: 800;
+    }
+
+    @keyframes rainbowBounce {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      25% {
+        transform: translateY(-20px) scale(1.1);
+      }
+
+      50% {
+        transform: translateY(0) scale(1);
+      }
+
+      75% {
+        transform: translateY(-10px) scale(1.05);
+      }
     }
 
     .menu {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
       width: 100%;
-      max-width: 900px;
+      max-width: 950px;
       padding: 10px;
     }
 
     .menu-card {
-      background: white;
-      border-radius: 25px;
-      padding: 40px 20px;
+      background: linear-gradient(145deg, #FFE5F1 0%, #FFF9E6 100%);
+      border-radius: 40px;
+      padding: 50px 25px;
       text-align: center;
       text-decoration: none;
-      font-size: clamp(1.5rem, 5vw, 2.5rem);
-      font-weight: bold;
-      color: #333;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      font-weight: 900;
+      color: #FF1493;
+      box-shadow:
+        0 8px 0px #FF69B4,
+        0 15px 30px rgba(0, 0, 0, 0.3);
       transition: all 0.3s ease;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 150px;
+      min-height: 180px;
+      position: relative;
+      border: 8px solid white;
+      animation: cardBounce 2s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .menu-card:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .menu-card:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .menu-card:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    .menu-card:nth-child(4) {
+      animation-delay: 0.6s;
+    }
+
+    .menu-card:nth-child(5) {
+      animation-delay: 0.8s;
+    }
+
+    .menu-card:nth-child(6) {
+      animation-delay: 1s;
+    }
+
+    @keyframes cardBounce {
+
+      0%,
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-15px) rotate(2deg);
+      }
+    }
+
+    .menu-card::before {
+      content: '✨';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 2.5rem;
+      animation: spin 3s linear infinite;
+    }
+
+    .menu-card::after {
+      content: '✨';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 2.5rem;
+      animation: spin 3s linear infinite reverse;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg) scale(1);
+      }
+
+      50% {
+        transform: rotate(180deg) scale(1.3);
+      }
+
+      100% {
+        transform: rotate(360deg) scale(1);
+      }
     }
 
     .menu-card:hover {
-      transform: translateY(-10px) scale(1.05);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      transform: translateY(-20px) scale(1.15) rotate(-5deg);
+      box-shadow:
+        0 12px 0px #FF1493,
+        0 25px 60px rgba(255, 20, 147, 0.6);
+      animation: shake 0.5s ease infinite;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateY(-20px) scale(1.15) rotate(-5deg);
+      }
+
+      25% {
+        transform: translateY(-20px) scale(1.15) rotate(-7deg);
+      }
+
+      75% {
+        transform: translateY(-20px) scale(1.15) rotate(-3deg);
+      }
     }
 
     .menu-card:active {
-      transform: translateY(-5px) scale(1.02);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow:
+        0 3px 0px #FF69B4,
+        0 8px 20px rgba(0, 0, 0, 0.3);
     }
 
     /* Tablet styles */
@@ -95,23 +340,29 @@
         padding: 15px;
       }
 
+      .shape {
+        font-size: 2.5rem;
+      }
+
       .menu {
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        gap: 25px;
         max-width: 600px;
       }
 
       .menu-card {
-        padding: 30px 15px;
-        min-height: 130px;
+        padding: 40px 20px;
+        min-height: 160px;
+        border-radius: 35px;
+        border-width: 6px;
       }
 
       h1 {
-        margin-bottom: 8px;
+        margin-bottom: 10px;
       }
 
       h2 {
-        margin-bottom: 25px;
+        margin-bottom: 30px;
       }
     }
 
@@ -123,44 +374,63 @@
         padding-top: 30px;
       }
 
+      .shape {
+        font-size: 2rem;
+      }
+
       .menu {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
         max-width: 400px;
       }
 
       .menu-card {
-        padding: 25px 20px;
-        min-height: 100px;
-        border-radius: 20px;
+        padding: 25px 15px;
+        min-height: 110px;
+        border-radius: 25px;
+        border-width: 5px;
+        font-size: 1.5rem;
+        box-shadow:
+          0 5px 0px #FF69B4,
+          0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .menu-card::before,
+      .menu-card::after {
+        font-size: 1.5rem;
       }
 
       h1 {
-        margin-bottom: 5px;
+        margin-bottom: 8px;
+        text-shadow: 3px 3px 0px #FF1493, 5px 5px 0px #FFD700;
       }
 
       h2 {
         margin-bottom: 20px;
+        text-shadow: 2px 2px 0px #FF6B9D, 3px 3px 0px #FFD700;
       }
     }
 
     /* Extra small devices */
     @media (max-width: 320px) {
       .menu-card {
-        padding: 20px 15px;
-        min-height: 90px;
+        padding: 20px 12px;
+        min-height: 100px;
+        font-size: 1.3rem;
       }
     }
 
     /* Touch device optimization */
     @media (hover: none) and (pointer: coarse) {
       .menu-card:hover {
-        transform: none;
+        animation: cardBounce 2s ease-in-out infinite;
       }
 
       .menu-card:active {
         transform: scale(0.95);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        box-shadow:
+          0 3px 0px #FF69B4,
+          0 8px 20px rgba(0, 0, 0, 0.3);
       }
     }
 
@@ -176,18 +446,18 @@
       }
 
       h2 {
-        font-size: 1rem;
+        font-size: 1.2rem;
         margin-bottom: 15px;
       }
 
       .menu {
         grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
+        gap: 15px;
       }
 
       .menu-card {
         padding: 20px 10px;
-        min-height: 80px;
+        min-height: 90px;
         font-size: 1.5rem;
       }
     }
@@ -195,16 +465,30 @@
 </head>
 
 <body>
-  <h1>👶 Baby Learn</h1>
-  <h2>Choose What You Want to Learn!</h2>
+  <div class="floating-shapes">
+    <div class="shape">🎈</div>
+    <div class="shape">⭐</div>
+    <div class="shape">🌈</div>
+    <div class="shape">☁️</div>
+    <div class="shape">🎨</div>
+    <div class="shape">🦄</div>
+    <div class="shape">🌟</div>
+    <div class="shape">🎪</div>
+    <div class="shape">🍭</div>
+  </div>
 
-  <div class="menu">
-    <a href="numbers.html" class="menu-card">🔢 Numbers</a>
-    <a href="letters.html" class="menu-card">🔤 Letters</a>
-    <a href="animals.html" class="menu-card">🐶 Animals</a>
-    <a href="fruits.html" class="menu-card">🍎 Fruits</a>
-    <a href="colors.html" class="menu-card">🎨 Colors</a>
-    <a href="shapes.html" class="menu-card">🔺 Shapes</a>
+  <div class="content-wrapper">
+    <h1>👶 BABY LEARN! 🌈</h1>
+    <h2>🎉 Tap & Play! 🎉</h2>
+
+    <div class="menu">
+      <a href="numbers.html" class="menu-card">🔢 Numbers</a>
+      <a href="letters.html" class="menu-card">🔤 Letters</a>
+      <a href="animals.html" class="menu-card">🐶 Animals</a>
+      <a href="fruits.html" class="menu-card">🍎 Fruits</a>
+      <a href="colors.html" class="menu-card">🎨 Colors</a>
+      <a href="shapes.html" class="menu-card">🔺 Shapes</a>
+    </div>
   </div>
 </body>
 
